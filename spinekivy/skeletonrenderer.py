@@ -56,10 +56,8 @@ class SkeletonRenderer(object):
                 sprite.color.a = 0.0
             elif attachment.type == AttachmentType.region:
                 sprite_mesh = sprite.mesh
-                attachment.compute_vertices_with_uvs(skeleton.x,
-                                                     skeleton.y,
-                                                     slot.bone,
-                                                     sprite_mesh.vertices)
+                attachment.\
+                    compute_world_vertices_uvs(slot, sprite_mesh.vertices)
                 indices = sprite_mesh.indices
                 if len(indices) == 4:
                     indices[0] = 0
@@ -76,10 +74,7 @@ class SkeletonRenderer(object):
             elif attachment.type == AttachmentType.mesh:
                 sprite_mesh = sprite.mesh
                 attachment.\
-                    compute_world_vertices_with_uvs(skeleton.x,
-                                                    skeleton.y,
-                                                    slot,
-                                                    sprite_mesh.vertices)
+                    compute_world_vertices_uvs(slot, sprite_mesh.vertices)
                 sprite_mesh.mode = 'triangles'
                 sprite_mesh.indices = attachment.triangles
                 sprite_mesh.texture = attachment.\
@@ -89,10 +84,7 @@ class SkeletonRenderer(object):
             elif attachment.type == AttachmentType.skinnedmesh:
                 sprite_mesh = sprite.mesh
                 attachment.\
-                    compute_world_vertices_with_uvs(skeleton.x,
-                                                    skeleton.y,
-                                                    slot,
-                                                    sprite_mesh.vertices)
+                    compute_world_vertices_uvs(slot, sprite_mesh.vertices)
                 sprite_mesh.mode = 'triangles'
                 sprite_mesh.indices = attachment.triangles
                 sprite_mesh.texture = attachment.\
