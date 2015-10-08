@@ -8,7 +8,7 @@ from spine.attachment.attachment import AttachmentType
 from spine.skeleton.skeleton import Skeleton
 from spine.skeleton.skeletonjson import SkeletonJson
 
-from textureloader import TextureLoader
+from spinekivy.textureloader import TextureLoader
 
 
 class SkeletonRenderer(object):
@@ -90,3 +90,7 @@ class SkeletonRenderer(object):
                 sprite_mesh.texture = attachment.\
                     renderer_object.page.renderer_object
                 sprite.color.rgba = (slot.r, slot.g, slot.b, slot.a)
+            else:
+                raise TypeError(
+                    'Unknown attachment type: {}'.format(type(attachment))
+                )
