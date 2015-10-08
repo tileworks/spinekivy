@@ -54,7 +54,6 @@ class SkeletonRenderer(object):
             sprite = sprites[i]
             if attachment is None:
                 sprite.color.a = 0.0
-                continue
             elif attachment.type == AttachmentType.region:
                 sprite_mesh = sprite.mesh
                 attachment.compute_vertices_with_uvs(skeleton.x,
