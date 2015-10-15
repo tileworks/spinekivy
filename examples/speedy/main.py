@@ -12,13 +12,11 @@ class MainScreen(Widget):
         super(MainScreen, self).__init__(**kwargs)
         self.skeleton_renderer = renderer = SkeletonRenderer()
         renderer.scale = 1.0
-        renderer.load('assets', 'spineboy-old')
+        renderer.load('assets', 'speedy')
         renderer.skeleton.x = 320
         renderer.skeleton.y = 100
         renderer.sprites = [Sprite() for _ in renderer.skeleton.draw_order]
-        renderer.state.set_animation_by_name(0, 'walk', True)
-        renderer.state.add_animation_by_name(0, 'jump', False, 3.0)
-        renderer.state.add_animation_by_name(0, 'walk', True, 0)
+        renderer.state.set_animation_by_name(0, 'run', True)
         for sprite in renderer.sprites:
             self.canvas.add(sprite)
         renderer.update(0)
@@ -30,15 +28,19 @@ class MainScreen(Widget):
         renderer.draw()
 
 
-class SpineBoyOldApp(App):
+class SpeedyApp(App):
 
     def build(self):
         return MainScreen()
 
     def on_start(self):
-        super(SpineBoyOldApp, self).on_start()
+        super(SpeedyApp, self).on_start()
         Clock.schedule_interval(self.root.update, 0)
+
+    def on_stop(self):
+        super(SpeedyApp, self).on_stop()
+        Clock.unschedule(self.root.update)
 
 
 if __name__ == '__main__':
-    SpineBoyOldApp().run()
+    SpeedyApp().run()

@@ -52,7 +52,8 @@ class SkeletonRenderer(object):
         for i, slot in enumerate(skeleton.draw_order):
             attachment = slot.attachment
             sprite = sprites[i]
-            if attachment is None:
+            if attachment is None \
+                    or attachment.type == AttachmentType.boundingbox:
                 sprite.color.a = 0.0
             elif attachment.type == AttachmentType.region:
                 sprite_mesh = sprite.mesh
@@ -92,5 +93,5 @@ class SkeletonRenderer(object):
                 sprite.color.rgba = (slot.r, slot.g, slot.b, slot.a)
             else:
                 raise TypeError(
-                    'Unknown attachment type: {}'.format(type(attachment))
+                    'Unknown attachment: {}'.format(type(attachment))
                 )

@@ -38,6 +38,10 @@ class GoblinsFFDApp(App):
         super(GoblinsFFDApp, self).on_start()
         Clock.schedule_interval(self.root.update, 0)
 
+    def on_stop(self):
+        super(GoblinsFFDApp, self).on_stop()
+        Clock.unschedule(self.root.update)
+
 
 if __name__ == '__main__':
     GoblinsFFDApp().run()

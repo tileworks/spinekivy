@@ -12,11 +12,12 @@ class MainScreen(Widget):
         super(MainScreen, self).__init__(**kwargs)
         self.skeleton_renderer = renderer = SkeletonRenderer()
         renderer.scale = 1.0
-        renderer.load('assets', 'powerup')
+        renderer.load('assets', 'goblins')
+        renderer.skeleton.set_skin_by_name('goblin')
         renderer.skeleton.x = 320
         renderer.skeleton.y = 100
         renderer.sprites = [Sprite() for _ in renderer.skeleton.draw_order]
-        renderer.state.set_animation_by_name(0, 'animation', True)
+        renderer.state.set_animation_by_name(0, 'walk', True)
         for sprite in renderer.sprites:
             self.canvas.add(sprite)
         renderer.update(0)
@@ -28,15 +29,19 @@ class MainScreen(Widget):
         renderer.draw()
 
 
-class PowerUpApp(App):
+class GoblinsApp(App):
 
     def build(self):
         return MainScreen()
 
     def on_start(self):
-        super(PowerUpApp, self).on_start()
+        super(GoblinsApp, self).on_start()
         Clock.schedule_interval(self.root.update, 0)
+
+    def on_stop(self):
+        super(GoblinsApp, self).on_stop()
+        Clock.unschedule(self.root.update)
 
 
 if __name__ == '__main__':
-    PowerUpApp().run()
+    GoblinsApp().run()

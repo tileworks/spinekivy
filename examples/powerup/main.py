@@ -12,11 +12,11 @@ class MainScreen(Widget):
         super(MainScreen, self).__init__(**kwargs)
         self.skeleton_renderer = renderer = SkeletonRenderer()
         renderer.scale = 1.0
-        renderer.load('assets', 'speedy')
+        renderer.load('assets', 'powerup')
         renderer.skeleton.x = 320
         renderer.skeleton.y = 100
         renderer.sprites = [Sprite() for _ in renderer.skeleton.draw_order]
-        renderer.state.set_animation_by_name(0, 'run', True)
+        renderer.state.set_animation_by_name(0, 'animation', True)
         for sprite in renderer.sprites:
             self.canvas.add(sprite)
         renderer.update(0)
@@ -28,15 +28,19 @@ class MainScreen(Widget):
         renderer.draw()
 
 
-class SpeedyApp(App):
+class PowerUpApp(App):
 
     def build(self):
         return MainScreen()
 
     def on_start(self):
-        super(SpeedyApp, self).on_start()
+        super(PowerUpApp, self).on_start()
         Clock.schedule_interval(self.root.update, 0)
+
+    def on_stop(self):
+        super(PowerUpApp, self).on_stop()
+        Clock.unschedule(self.root.update)
 
 
 if __name__ == '__main__':
-    SpeedyApp().run()
+    PowerUpApp().run()
