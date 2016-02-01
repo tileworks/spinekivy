@@ -77,6 +77,8 @@ class SkeletonRenderer(object):
                 mesh.indices[:] = attachment.triangles
                 mesh.texture = attachment.renderer_object
                 sprite.color.rgba[:] = (slot.r, slot.g, slot.b, slot.a)
+            elif attachment.type == AttachmentType.boundingbox:
+                sprite.color.a = 0.0
             else:
                 raise TypeError(
                     'Unknown attachment: {}'.format(type(attachment))
