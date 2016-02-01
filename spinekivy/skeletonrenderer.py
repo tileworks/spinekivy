@@ -3,12 +3,14 @@ from os.path import join as join_path
 from spine.animation.animationstate import AnimationState
 from spine.animation.animationstatedata import AnimationStateData
 from spine.atlas.atlas import Atlas
-from spine.attachment.atlasattachmentloader import AtlasAttachmentLoader
 from spine.attachment.attachment import AttachmentType
 from spine.skeleton.skeleton import Skeleton
 from spine.skeleton.skeletonjson import SkeletonJson
 
+from spinekivy.atlasattachmentloader import AtlasAttachmentLoader
 from spinekivy.textureloader import TextureLoader
+
+_REGION_INDICES = range(4)
 
 
 class SkeletonRenderer(object):
@@ -49,48 +51,35 @@ class SkeletonRenderer(object):
     def draw(self):
         skeleton = self.skeleton
         sprites = self.sprites
-        for i, slot in enumerate(skeleton.draw_order):
+        i = -1
+        for slot in skeleton.draw_order:
+            i += 1
             attachment = slot.attachment
             sprite = sprites[i]
-            if attachment is None \
-                    or attachment.type == AttachmentType.boundingbox:
+            if not attachment:
                 sprite.color.a = 0.0
-            elif attachment.type == AttachmentType.region:
-                sprite_mesh = sprite.mesh
-                attachment.\
-                    compute_world_vertices_uvs(slot, sprite_mesh.vertices)
-                indices = sprite_mesh.indices
-                if len(indices) == 4:
-                    indices[0] = 0
-                    indices[1] = 1
-                    indices[2] = 2
-                    indices[3] = 3
-                else:
-                    indices[:] = range(4)
-                sprite_mesh.mode = 'triangle_fan'
-                sprite_mesh.texture = attachment.\
-                    renderer_object.page.renderer_object
-                sprite.color.rgba = (slot.r, slot.g, slot.b, slot.a)
-
+                return
+            if attachment.type == AttachmentType.region:
+                mesh = sprite.mesh
+                attachment.compute_world_vertices_uvs(slot, mesh.vertices)
+                mesh.indices[:] = _REGION_INDICES
+                mesh.mode = 'triangle_fan'
+                mesh.texture = attachment.renderer_object
+                sprite.color.rgba[:] = (slot.r, slot.g, slot.b, slot.a)
             elif attachment.type == AttachmentType.mesh:
-                sprite_mesh = sprite.mesh
-                attachment.\
-                    compute_world_vertices_uvs(slot, sprite_mesh.vertices)
-                sprite_mesh.mode = 'triangles'
-                sprite_mesh.indices = attachment.triangles
-                sprite_mesh.texture = attachment.\
-                    renderer_object.page.renderer_object
-                sprite.color.rgba = (slot.r, slot.g, slot.b, slot.a)
-
+                mesh = sprite.mesh
+                attachment.compute_world_vertices_uvs(slot, mesh.vertices)
+                mesh.mode = 'triangles'
+                mesh.indices[:] = attachment.triangles
+                mesh.texture = attachment.renderer_object
+                sprite.color.rgba[:] = (slot.r, slot.g, slot.b, slot.a)
             elif attachment.type == AttachmentType.skinnedmesh:
-                sprite_mesh = sprite.mesh
-                attachment.\
-                    compute_world_vertices_uvs(slot, sprite_mesh.vertices)
-                sprite_mesh.mode = 'triangles'
-                sprite_mesh.indices = attachment.triangles
-                sprite_mesh.texture = attachment.\
-                    renderer_object.page.renderer_object
-                sprite.color.rgba = (slot.r, slot.g, slot.b, slot.a)
+                mesh = sprite.mesh
+                attachment.compute_world_vertices_uvs(slot, mesh.vertices)
+                mesh.mode = 'triangles'
+                mesh.indices[:] = attachment.triangles
+                mesh.texture = attachment.renderer_object
+                sprite.color.rgba[:] = (slot.r, slot.g, slot.b, slot.a)
             else:
                 raise TypeError(
                     'Unknown attachment: {}'.format(type(attachment))
