@@ -22,12 +22,9 @@ class MainScreen(Widget):
         for sprite in renderer.sprites:
             self.canvas.add(sprite)
         renderer.update(0)
-        renderer.draw()
 
     def update(self, dt):
-        renderer = self.skeleton_renderer
-        renderer.update(dt)
-        renderer.draw()
+        self.skeleton_renderer.update(dt)
 
 
 class SpineBoyApp(App):

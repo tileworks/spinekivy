@@ -44,13 +44,10 @@ class SkeletonRenderer(object):
     def update(self, dt):
         state = self.state
         skeleton = self.skeleton
+        sprites = self.sprites
         state.update(dt)
         state.apply(skeleton)
         skeleton.update_world_transform()
-
-    def draw(self):
-        skeleton = self.skeleton
-        sprites = self.sprites
         i = -1
         for slot in skeleton.draw_order:
             i += 1
