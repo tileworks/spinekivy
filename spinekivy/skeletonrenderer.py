@@ -1,4 +1,4 @@
-from os.path import join as join_path
+from os.path import join
 
 from spine.animation.animationstate import AnimationState
 from spine.animation.animationstatedata import AnimationStateData
@@ -27,13 +27,13 @@ class SkeletonRenderer(object):
         self.state = AnimationState(AnimationStateData(skeleton_data))
 
     def _load_atlas(self, path, name):
-        with open(join_path(path, name + '.atlas')) as fp:
+        with open(join(path, name + '.atlas')) as fp:
             atlas_text = fp.read()
         texture_loader = TextureLoader(path)
         return Atlas(atlas_text, texture_loader)
     
     def _load_skeleton_data(self, path, name):
-        with open(join_path(path, name + '.json')) as fp:
+        with open(join(path, name + '.json')) as fp:
             json_text = fp.read()
         atlas = self._load_atlas(path, name)
         attachment_loader = AtlasAttachmentLoader(atlas)
