@@ -55,8 +55,7 @@ class SkeletonRenderer(object):
             sprite = sprites[i]
             if not attachment:
                 sprite.color.a = 0.0
-                return
-            if attachment.type == AttachmentType.region:
+            elif attachment.type == AttachmentType.region:
                 mesh = sprite.mesh
                 attachment.compute_world_vertices_uvs(slot, mesh.vertices)
                 mesh.indices[:] = _REGION_INDICES

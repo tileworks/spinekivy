@@ -1,4 +1,4 @@
-from os.path import join as join_path
+from os.path import join
 from kivy.core.image import ImageLoader
 
 from spine.atlas.atlas import AtlasFormat
@@ -31,8 +31,8 @@ class TextureLoader(AbstractTextureLoader):
     }
 
     def load(self, atlas_page, image_name):
-        image = ImageLoader.load(join_path(self.images_path, image_name))
-        texture = image.texture.get_region(0, 0, image.width, image.height)
+        image = ImageLoader.load(join(self.images_path, image_name))
+        texture = image.texture
         texture.mag_filter = self.texture_filter_type[atlas_page.mag_filter]
         texture.min_filter = self.texture_filter_type[atlas_page.min_filter]
         atlas_page.renderer_object = texture
