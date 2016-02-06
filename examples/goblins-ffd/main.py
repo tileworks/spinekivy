@@ -21,7 +21,6 @@ class MainScreen(Widget):
         for sprite in renderer.sprites:
             self.canvas.add(sprite)
         renderer.update(0)
-        renderer.update(0)
 
     def update(self, dt):
         self.skeleton_renderer.update(dt)
