@@ -1,5 +1,4 @@
-from os.path import join
-
+from os.path import basename, dirname
 from spine.animation.animationstate import AnimationState
 from spine.animation.animationstatedata import AnimationStateData
 from spine.atlas.atlas import Atlas
@@ -21,25 +20,25 @@ class SkeletonRenderer(object):
         self.scale = 1.0
         self.sprites = []
 
-    def load(self, path, name):
-        skeleton_data = self._load_skeleton_data(path, name)
+    def load(self, path):
+        skeleton_data = self._load_skeleton_data(path)
         self.skeleton = Skeleton(skeleton_data)
         self.state = AnimationState(AnimationStateData(skeleton_data))
 
-    def _load_atlas(self, path, name):
-        with open(join(path, name + '.atlas')) as fp:
-            atlas_text = fp.read()
-        texture_loader = TextureLoader(path)
-        return Atlas(atlas_text, texture_loader)
-    
-    def _load_skeleton_data(self, path, name):
-        with open(join(path, name + '.json')) as fp:
+    def _load_skeleton_data(self, path):
+        with open(path + '.json') as fp:
             json_text = fp.read()
-        atlas = self._load_atlas(path, name)
+        atlas = self._load_atlas(path)
         attachment_loader = AtlasAttachmentLoader(atlas)
         skeleton_json = SkeletonJson(attachment_loader)
         skeleton_json.scale = self.scale
-        return skeleton_json.read_data(json_text, name)
+        return skeleton_json.read_data(json_text, basename(path))
+
+    def _load_atlas(self, path):
+        with open(path + '.atlas') as fp:
+            atlas_text = fp.read()
+        texture_loader = TextureLoader(dirname(path))
+        return Atlas(atlas_text, texture_loader)
 
     def update(self, dt):
         state = self.state

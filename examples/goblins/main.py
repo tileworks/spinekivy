@@ -1,6 +1,7 @@
 from kivy.app import App
 from kivy.clock import Clock
 from kivy.uix.widget import Widget
+from os.path import join
 
 from spinekivy.skeletonrenderer import SkeletonRenderer
 from spinekivy.sprite import Sprite
@@ -12,7 +13,7 @@ class MainScreen(Widget):
         super(MainScreen, self).__init__(**kwargs)
         self.skeleton_renderer = renderer = SkeletonRenderer()
         renderer.scale = 1.0
-        renderer.load('assets', 'goblins')
+        renderer.load(join('assets', 'goblins'))
         renderer.skeleton.set_skin_by_name('goblin')
         renderer.skeleton.x = 320
         renderer.skeleton.y = 100
