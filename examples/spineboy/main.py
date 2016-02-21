@@ -16,7 +16,7 @@ class MainScreen(Widget):
         renderer.load(join('assets', 'spineboy'))
         renderer.skeleton.x = 320
         renderer.skeleton.y = 100
-        renderer.sprites = [Sprite() for _ in renderer.skeleton.draw_order]
+        renderer.sprites = [Sprite() for _ in renderer.skeleton.slots]
         renderer.state.set_animation_by_name(0, 'walk', True)
         renderer.state.add_animation_by_name(0, 'jump', False, 3.0)
         renderer.state.add_animation_by_name(0, 'run', True, 0)

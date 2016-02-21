@@ -16,7 +16,7 @@ class MainScreen(Widget):
         renderer.load(join('assets', 'powerup'))
         renderer.skeleton.x = 320
         renderer.skeleton.y = 100
-        renderer.sprites = [Sprite() for _ in renderer.skeleton.draw_order]
+        renderer.sprites = [Sprite() for _ in renderer.skeleton.slots]
         renderer.state.set_animation_by_name(0, 'animation', True)
         for sprite in renderer.sprites:
             self.canvas.add(sprite)
