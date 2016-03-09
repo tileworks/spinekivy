@@ -1,11 +1,9 @@
 from setuptools import setup
 
-import spinekivy
-
 
 setup(
     name='spinekivy',
-    version=spinekivy.__version__,
+    version='0.1.2-dev0',
     author='Tileworks Games and other contributors',
     author_email='tileworksgames@gmail.com',
     description='Spine skeleton renderer for Kivy framework.',
@@ -19,15 +17,14 @@ setup(
         'kivy>=1.8.0',
         'spine-cython>=0.5.0'
     ],
-    keywords='spine kivy',
+    keywords=['spine', 'kivy'],
     classifiers=[
         'Intended Audience :: Developers',
         'Intended Audience :: End Users/Desktop',
         'Intended Audience :: Information Technology',
         'Programming Language :: Python :: 2.7',
         'License :: OSI Approved :: MIT License',
-        'Operating System :: Microsoft :: Windows',
         'Topic :: Games/Entertainment',
-        'Topic :: Multimedia :: Graphics',
+        'Topic :: Multimedia :: Graphics'
     ]
 )
