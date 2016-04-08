@@ -7,7 +7,6 @@ setup(
     author='Tileworks Games and other contributors',
     author_email='tileworksgames@gmail.com',
     description='Spine skeleton renderer for Kivy framework.',
-    long_description=spinekivy.__doc__,
     license='MIT',
     packages=['spinekivy'],
     package_dir={
