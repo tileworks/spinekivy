@@ -1,4 +1,7 @@
 build
 .idea
 dist
+venv
+
 *.pyc
+*.pyo

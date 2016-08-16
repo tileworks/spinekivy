@@ -1,4 +1,5 @@
 from os.path import basename, dirname
+
 from spine.animation.animationstate import AnimationState
 from spine.animation.animationstatedata import AnimationStateData
 from spine.atlas.atlas import Atlas
@@ -7,6 +8,7 @@ from spine.skeleton.skeleton import Skeleton
 from spine.skeleton.skeletonjson import SkeletonJson
 
 from spinekivy.atlasattachmentloader import AtlasAttachmentLoader
+from spinekivy.sprite import MODE_TRIANGLE_FAN, MODE_TRIANGLES
 from spinekivy.textureloader import TextureLoader
 
 _REGION_INDICES = range(4)
@@ -58,20 +60,20 @@ class SkeletonRenderer(object):
                 mesh = sprite.mesh
                 attachment.compute_world_vertices_uvs(slot, mesh.vertices)
                 mesh.indices[:] = _REGION_INDICES
-                mesh.mode = 'triangle_fan'
+                mesh.mode = MODE_TRIANGLE_FAN
                 mesh.texture = attachment.renderer_object
                 sprite.color.rgba[:] = (slot.r, slot.g, slot.b, slot.a)
             elif attachment.type == AttachmentType.mesh:
                 mesh = sprite.mesh
                 attachment.compute_world_vertices_uvs(slot, mesh.vertices)
-                mesh.mode = 'triangles'
+                mesh.mode = MODE_TRIANGLES
                 mesh.indices[:] = attachment.triangles
                 mesh.texture = attachment.renderer_object
                 sprite.color.rgba[:] = (slot.r, slot.g, slot.b, slot.a)
             elif attachment.type == AttachmentType.skinnedmesh:
                 mesh = sprite.mesh
                 attachment.compute_world_vertices_uvs(slot, mesh.vertices)
-                mesh.mode = 'triangles'
+                mesh.mode = MODE_TRIANGLES
                 mesh.indices[:] = attachment.triangles
                 mesh.texture = attachment.renderer_object
                 sprite.color.rgba[:] = (slot.r, slot.g, slot.b, slot.a)
